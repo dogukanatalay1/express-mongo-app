@@ -14,4 +14,4 @@ app.get('/', (req, res) => res.send('Running!'));
 
 const PORT = process.env.PORT || 5001;
 
-app.listen(PORT, () => console.log(`Server at port ${PORT}`));
+app.listen(PORT, () => console.log(`Server running at port ${PORT}`));
