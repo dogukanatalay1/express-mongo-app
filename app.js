@@ -1,17 +1,22 @@
-import express from 'express';
-import dotenv from 'dotenv';
-import todoRouter from './src/routers/todoRouters.js';
+const express = require("express")
+const app = express()
+require("dotenv").config()
+require("./src/config/databaseConnection")
+const port = process.env.PORT || 5001
+const todoRouter = require("./src/routers/todoRouters")
+const cors = require('cors')
 
-dotenv.config();
-
-const app = express();
 
 app.use(express.json())
 
-app.use('/api', todoRouter);
+app.use(cors())
 
-app.get('/', (req, res) => res.send('Running!'));
+app.use("/api", todoRouter)
 
-const PORT = process.env.PORT || 5001;
+app.get("/", (req, res) => {
+    res.send("Hoş Geldiniz ...")
+})
 
-app.listen(PORT, () => console.log(`Server running at port ${PORT}`));
+app.listen(port, () => {
+    console.log(`Server ${port} Portundan Başlatıldı ...` );
+})
