@@ -53,17 +53,17 @@ const todoUpdate = async (req, res) => {
     const { id } = req.params
     try {
         const todoUpdate = await todo.findByIdAndUpdate(id, req.body)
-        if (todoUpdate) {
-            return res.status(200).json({
-                success: true,
-                message: "Güncelleme Başarılı"
+        if (!todoUpdate) { 
+            return res.status(400).json({
+                success: false,
+                message: "Kayıt Güncellenemedi !"
             })
         }
-        else return res.status(400).json({
-            success: false,
-            message: "Kayıt Güncellenemedi !"
+        return res.status(200).json({
+            success: true,
+            message: "Güncelleme Başarılı"
         })
-
+        
     } catch (error) {
         return res.status(500).json({
             success: false,
@@ -77,18 +77,16 @@ const todoDelete = async (req, res) => {
     
     try {
         const todoDelete = await todo.findByIdAndDelete(id)
-        if (todoDelete) {
-            return res.status(200).json({
-                success: true,
-                message: "Kayıt Başarıyla Silindi"
-            })
-        }
-        else {
+        if (!todoDelete) {
             return res.status(400).json({
                 success: false,
                 message: "Kayıt Silinemedi"
             })
         }
+        return res.status(200).json({
+            success: true,
+            message: "Kayıt Başarıyla Silindi"
+        })
         
     } catch (error) {
         return res.status(500).json({
@@ -96,23 +94,19 @@ const todoDelete = async (req, res) => {
             message: "Kayıt Silinemedi : " + error
         })
     }
-
-
 }
 
 const todoGet = async (req, res) => {
     const { id } = req.params
 
     const todoGet = await todo.findById(id)
-    if (todoGet) {
-        return res.status(200).json(todoGet)
-    }
-    else {
+    if (!todoGet) {
         return res.status(404).json({
             success: false,
             message: "Kayıt Bulunamadı !"
         })
     }
+    return res.status(200).json(todoGet)
 }
 
 
